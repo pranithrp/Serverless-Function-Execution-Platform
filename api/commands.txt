@@ -1,0 +1,47 @@
+uvicorn main:app --reload
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/functions/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "HelloWorld",
+  "route": "/hello",
+  "language": "python",
+  "timeout": 5,
+  "runtime": "runsc",
+  "settings": {
+    "code": "print(\"Hello from python\")"
+  }
+}'
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/functions/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "HelloNode",
+  "route": "/hello-node",
+  "language": "node",
+  "timeout": 5,
+  "runtime": "runc",
+  "settings": {
+    "code": "console.log(\"Hello from Node.js\")"
+  }
+}'
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/functions/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "TimeoutTestNode2",
+  "route": "timeout-node2",
+  "language": "node",
+  "timeout": 5,
+  "runtime": "runc",
+  "settings": {
+    "code": "setTimeout(() => console.log(\"This should timeout!\"), 6000);"
+  }
+}'
+
